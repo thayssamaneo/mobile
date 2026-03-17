@@ -92,3 +92,12 @@ Comandos para criar as pastas:
         - Limpa o cache do build (apaga o apk anterior)
     - `flutter run -v`
         - Build do app (apk) 
+
+- Gerenciamento de dependências do PubSpec()
+    - **Instalação**
+        - `fluter pub add nome_dependencia`
+    - **Baixar e instalar dependências projetadas**
+        - `flutter pub get`
+    - **Outros comandos do flutter pub(dependências)**
+        - `fluter pub outdated` --> verifica se as dependências estão atualizadas
+        - `flutter pub upgrade` --> atualiza as dependências do flutter pub
