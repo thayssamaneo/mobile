@@ -109,7 +109,7 @@ Comandos para criar as pastas:
 Gráfico com demonstração da hierarquia
 
 ```mermaid
-grafh BT 
+graph BT 
 
     MA['MaterialApp']
     STL['StateLess Widget']
