@@ -101,3 +101,28 @@ Comandos para criar as pastas:
     - **Outros comandos do flutter pub(dependências)**
         - `fluter pub outdated` --> verifica se as dependências estão atualizadas
         - `flutter pub upgrade` --> atualiza as dependências do flutter pub
+
+### Estrutura de um aplicativo
+
+#### A hierarquia de árvore
+
+Gráfico com demonstração da hierarquia
+
+```mermaid
+grafh BT 
+
+    MA['MaterialApp']
+    STL['StateLess Widget']
+    STF['StateFull Widget']
+    SC['Scaffold']
+    ABar['AppBar']
+    BD['Body']
+    BNBar['BottonNavigationBar']
+    DW['Drawer']
+    FAB['FloatActionButton']
+    SB['SnackBar']
+
+    MA --> STL & STF
+    STF & STL --> SC
+    SC --> ABar & BD & BNBar & DW & FAB & SB
+```
