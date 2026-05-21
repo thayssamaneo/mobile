@@ -113,7 +113,7 @@ graph BT
 
     MA['MaterialApp']
     STL['StateLess Widget']
-    STF['StateFull Widget']
+    STF['StateFul Widget']
     SC['Scaffold']
     ABar['AppBar']
     BD['Body']
@@ -126,3 +126,10 @@ graph BT
     STF & STL --> SC
     SC --> ABar & BD & BNBar & DW & FAB & SB
 ```
+
+#### Matriz Comparativa entre StateLess e StateFul
+
+|Carcterísticas|StateLessWidget|StateFul Widget|
+|-|-|-|
+|Mutabilidade|Imutável(não muda após carregar)|Mutável(permite mudanças de estado após carregamento do aplicativo)|
+|Uso ideal|Layouts fixo e exibição de dados estáticos
