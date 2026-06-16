@@ -1,8 +1,9 @@
-import 'package:sa_petshop_sqlite/database/database_helper.dart';
-import 'package:sa_petshop_sqlite/model/pet_model.dart';
+import 'package:sa_sh_petshop/database/database_helper.dart';
+import 'package:sa_sh_petshop/model/pet_model.dart';
 
 // Slim Controllers --> Técnica para fazer os Controllers mais breves
 //                       Cria --> Chama --> Retorna
+
 
 class PetController {
   //estabelecer as conexões com o db

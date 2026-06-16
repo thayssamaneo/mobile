@@ -1,5 +1,3 @@
-import 'package:sa_petshop_sqlite/database/database_helper.dart';
-import 'package:sa_petshop_sqlite/model/consulta_model.dart';
 import 'package:sa_sh_petshop/database/database_helper.dart';
 import 'package:sa_sh_petshop/model/consulta_model.dart';
 
