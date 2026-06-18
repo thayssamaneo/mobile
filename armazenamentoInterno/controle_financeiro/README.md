@@ -226,6 +226,7 @@ classDiagram
     }
 
     class Transacoes{
+        -id
         -idCategoria
         -valor
         -descricao
