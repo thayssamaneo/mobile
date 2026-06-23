@@ -1,4 +1,0 @@
-// atributos
-// construtor
-// toMap
-// fromMap

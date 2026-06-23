@@ -1,10 +1,13 @@
 # Documentação de Especificações de Requisitos de Software (SRS)
 
-## Aplicativo de Controle Financeiro Pessoal ()
+## Aplicativo de Controle Financeiro Pessoal (ACF)
 
-**Padrão Internacional:** ISO/IEC/IEEE 29148:2018 \
-**Versão:** 1.0.0 \
-**Data:** 2026-06-11 \
+**Padrão Internacional:** ISO/IEC/IEEE 29148:2018
+
+**Versão:** 1.0.0
+
+**Data:** 2026-06-23
+
 **Autor:** Thayssa Maneo
 
 ---
@@ -13,11 +16,11 @@
 
 ### 1.1 Propósito
 
-Este documento visa descrever os requitos do aplicativo ---, com o objetivo de:
+Este documento visa descrever os requisitos do aplicativo ACF, com o objetivo de:
 
-- Definir funcionalidades e restrições;
-- Padronizar o entendimento entre os stakeholders;
-- Servir como base para desenvolvimento e teste;
+* Definir funcionalidades e restrições;
+* Padronizar o entendimento entre os stakeholders;
+* Servir como base para desenvolvimento e teste;
 
 ---
 
@@ -25,49 +28,50 @@ Este documento visa descrever os requitos do aplicativo ---, com o objetivo de:
 
 O aplicativo permitirá:
 
-- Cadastro de categorias personalizadas;
-- Registro de transações em cada categoria;
-- Visualização dos registros por categoria;
+* Cadastro de categorias personalizadas;
+* Registro de transações em cada categoria;
+* Visualização dos registros por categoria;
 
 O aplicativo será uma aplicação mobile utilizando:
 
-- Framework Flutter;
-- Dart;
+* Framework Flutter;
+* Dart;
 
-Objetivos:
-
-Criar um aplicativo de controle financeiro que seja intuitivo para o registro de transações financeiras e controle das mesmas.
+**Objetivos:** Criar um aplicativo de controle financeiro que seja intuitivo para o registro de transações financeiras e controle das mesmas.
 
 ---
 
 ### 1.3 Definições e Acrônimos
 
-Tabela de termos e tefinições:
+Tabela de termos e definições:
 
 | Termos | Definições |
-|-|-|
+| --- | --- |
 | Categoria | Nome fornecido a um grupo que compartilha as mesmas características |
 | Transações | Movimentações de recursos financeiros entre dois meios (contas, agentes econômicos, etc) |
 
-Lista de Acrônimos
+Lista de Acrônimos:
 
-- **ACF:** Aplicativo de Controle Financeiro
-- **RF:** Requisitos Funcionais
-- **RNF:** Requisitos Não Funcionais
-- **UC:** Casos de Uso
-- **CA:** Critérios de Aceitação
+* **ACF:** Aplicativo de Controle Financeiro
+* **RF:** Requisitos Funcionais
+* **RNF:** Requisitos Não Funcionais
+* **UC:** Casos de Uso
+* **CA:** Critérios de Aceitação
 
 ---
 
-### 1.4 Visão geral do documento
+### 1.4 Visão Geral do Documento
 
 Este documento está organizado em:
 
-- Introdução e Visão Geral
-- Descrição do Sistema
-- Requisitos Detalhados
-- Modelos UML
-- Regras de Négocio
+* Introdução e Visão Geral
+* Descrição Geral do Sistema e Instruções de Execução
+* Requisitos do Sistema (Funcionais e Não Funcionais)
+* Regras de Negócio
+* Modelos do Sistema (UML)
+* Análise de Risco
+* Restrições do Sistema
+* Controle de Versões
 
 ---
 
@@ -78,7 +82,6 @@ Este documento está organizado em:
 O Sistema é mobile, operando em dispositivos móveis.
 
 ```mermaid
-
 flowchart TD
     Usuário --> Interface
     Interface --> Controller
@@ -98,23 +101,49 @@ O Sistema deve:
 * Cadastrar categorias;
 * Registrar transações por categoria;
 * Exibir dados;
-  
----
-
-### 2.3 Ambiente Operacional
-
-* Dispositivos móveis (Smartphones, tablets)
 
 ---
 
-### 2.4 Restrições
+### 2.3 Ambiente Operacional e Instruções de Execução
 
-* Sem autenticação;
-* Sem exclusão de categorias ou registros
+O sistema opera em dispositivos móveis (Smartphones e tablets) através de emuladores ou dispositivos físicos Android/iOS.
+
+#### Pré-requisitos de Instalação:
+
+1. Possuir o SDK do Flutter configurado na máquina local estável.
+2. Certificar-se através do terminal que a integridade do ambiente está correta:
+```bash
+
+```
+
+
+
+flutter doctor
+
+```
+
+#### Passos para Execução do Sistema:
+1. Abra o terminal de comandos no diretório raiz onde o código-fonte do projeto está localizado.
+2. Atualize e baixe as dependências declaradas no arquivo `pubspec.yaml` (incluindo o mecanismo de persistência `sqflite`):
+   ```bash
+   flutter pub get
+
+```
+
+3. Conecte um dispositivo físico configurado em modo de depuração USB ou inicie um emulador móvel correspondente.
+4. Inicialize o aplicativo em modo de desenvolvimento através do comando:
+```bash
+flutter run
+
+```
+
+
+
+```
 
 ---
 
-### 2.5 Suposições
+### 2.4 Suposições
 
 * Usuário possui conhecimento de Informática;
 
@@ -122,73 +151,81 @@ O Sistema deve:
 
 ## 3. Requisitos do Sistema
 
-### 3.1 Requisitos funcionais
+### 3.1 Requisitos Funcionais (RF)
 
 #### RF-01: Cadastro de Categorias
 
 **Descrição:** Permitir cadastrar uma categoria de receita ou despesa.
-- Prioridade: Alta
-- Versão: 1.0
-- Data: 2026-06-11
-- Rastreabilidade: Necessidade do Stakeholder 01
 
-**Critérios de aceitação** \
-[] Entrada de dados: Nome da categoria, descrição, total de despesas/receitas em um periodo \
-[] Validação dos campos \
-[] Verificação de duplicidade
+* **Prioridade:** Alta
+* **Versão:** 1.0
+* **Data:** 2026-06-11
+* **Rastreabilidade:** Necessidade do Stakeholder 01
 
-#### RF-02: Registro de transações por categoria
+**Critérios de aceitação:**  
+[ ] Entrada de dados: Nome da categoria, descrição, total de despesas/receitas em um período  
+[ ] Validação dos campos  
+[ ] Verificação de duplicidade  
+
+#### RF-02: Registro de Transações por Categoria
 
 **Descrição:** Permitir o registro de transações em cada categoria.
-- Prioridade: Alta
-- Versão: 1.0
-- Data: 2026-06-11
-- Rastreabilidade: Necessidade do Stakeholder 02
 
-**Critérios de aceitação** \
-[] Entrada de Dados: Nome, Categoria, valor, descrição, data e tipo (despesa/receita). \
-[] Validação de Campos \
-[] Saída: Notificação para o usuário
+* **Prioridade:** Alta
+* **Versão:** 1.0
+* **Data:** 2026-06-11
+* **Rastreabilidade:** Necessidade do Stakeholder 02
 
-#### RF-03: Listagem das transações feitas em cada categoria
+**Critérios de aceitação:**  
+[ ] Entrada de Dados: Nome, Categoria, valor, descrição, data e tipo (despesa/receita).  
+[ ] Validação de Campos  
+[ ] Saída: Notificação para o usuário  
+
+#### RF-03: Listagem das Transações feitas em cada Categoria
 
 **Descrição:** Exibir em cada categoria as transações feitas em um período.
-- Prioridade: Alta
-- Versão: 1.0
-- Data: 2026-06-11
-- Rastreabilidade: Necessidade do Stakeholder 03
 
-**Critérios de aceitação**\
-[] Listagem de transações\
-[] Saída: Categoria, valor, descrição, data e tipo
+* **Prioridade:** Alta
+* **Versão:** 1.0
+* **Data:** 2026-06-11
+* **Rastreabilidade:** Necessidade do Stakeholder 03
+
+**Critérios de aceitação:**  
+[ ] Listagem de transações  
+[ ] Saída: Categoria, valor, descrição, data e tipo  
 
 ---
 
-### 3.2 Requisitos Não Funcionais
+### 3.2 Requisitos Não Funcionais (RNF)
 
 #### RNF-001: Usabilidade
+
 **Descrição:** Interface Simples e Intuitiva.
 
 #### RNF-002: Desempenho
+
 **Descrição:** Respostas Rápidas e Inferiores a 1 Segundo.
 
-#### RNF-002: Arquitetura de Software MVC
+#### RNF-003: Arquitetura de Software MVC
+
 **Descrição:** Estrutura da Arquitetura de Códigos em Padrão MVC (Model, View, Controller).
 
-#### RNF-002: Confiabilidade
+#### RNF-004: Confiabilidade
+
 **Descrição:** Validação de Entrada de Dados Obrigatória.
 
 ---
 
-## Regras do Negócio
+## 4. Regras de Negócio (RN)
 
-Tabela de Regras
-|Regras de Negócio|Descrição|
-|-|-|
-| RN-01 | Toda transação precisa pertencer a uma categoria |
-| RN-02 | O período exibido deve ser de no mínimo 3 meses |
+Tabela de Regras:
 
-**Adicionar as restrições no final**
+| Regras de Negócio | Descrição |
+| --- | --- |
+| **RN-01** | Toda transação precisa pertencer a uma categoria |
+| **RN-02** | O período exibido deve ser de no mínimo 3 meses |
+
+---
 
 ## 5. Modelos do Sistema
 
@@ -197,7 +234,6 @@ Tabela de Regras
 Diagrama de casos de uso: O que o sistema deve fazer do ponto de vista do usuário.
 
 ```mermaid
-
 flowchart LR
     Usuário --> UC1[Cadastrar categoria]
     Usuário --> UC2[Registrar transação]
@@ -209,19 +245,16 @@ flowchart LR
 
 ### 5.2 Diagrama de Classes UML
 
-Diagrama de Classe UML: Estrutura do código, classes, atributos e métodos
+Diagrama de Classe UML: Estrutura do código, classes, atributos e métodos.
 
 ```mermaid
-
 classDiagram
-
     class Categoria{
         -id
         -nome
         -descricao
         -totalDespesasReceitas
         -quantidade
-
         +cadastro(nome, descricao, totalDespesasReceitas)
     }
 
@@ -243,15 +276,24 @@ classDiagram
 ## 6. Análise de Risco
 
 | Risco | Impacto | Mitigação |
-| - | - | - |
-| Perda de Dados | Alto | Usar banco de dados |
-| Entrada de Dados | Médio | Validar as Entradas de Dados |
+| --- | --- | --- |
+| Perda de Dados | Alto | Usar banco de dados relacional local (SQLite) |
+| Entrada de Dados Incorreta | Médio | Validar rigidamente as Entradas de Dados nos formulários |
 
 ---
-## 7. Controle de Versões
 
-### 7.1 Histórico de Alterações
+## 7. Restrições do Sistema
+
+* **RES-01:** O sistema não possuirá telas ou rotinas de autenticação/login nesta versão.
+* **RES-02:** Não será permitida a exclusão de categorias ou de registros de transações após terem sido salvos no banco de dados.
+
+---
+
+## 8. Controle de Versões
+
+### 8.1 Histórico de Alterações
 
 | Versão | Data | Autor | Modificação |
-|-|-|-|-|
+| --- | --- | --- | --- |
 | 1.0.0 | 2026-06-11 | Thayssa Maneo | Versão Inicial |
+| 1.1.0 | 2026-06-23 | Thayssa Maneo | Versão final |
