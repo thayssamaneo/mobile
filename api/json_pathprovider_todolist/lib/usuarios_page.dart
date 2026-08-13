@@ -56,15 +56,11 @@ class _UsuariosPageState extends State<UsuariosPage> {
         padding: EdgeInsets.all(8),
         child: Column(
           children: [
-            Row(
-              children: [
-                TextField(
-                  controller: _nomeUsuario,
-                  decoration: InputDecoration(labelText: "Novo usuário"),
-                ),
-                IconButton(onPressed: _salvarUsuario, icon: Icon(Icons.add, color: Colors.green)),
-              ],
+            TextField(
+              controller: _nomeUsuario,
+              decoration: InputDecoration(labelText: "Novo usuário"),
             ),
+            IconButton(onPressed: _salvarUsuario, icon: Icon(Icons.add, color: Colors.green)),
             // expanded com a lista de usuários
             Expanded(child: ListView.builder(
               itemCount: usuarios.length,
