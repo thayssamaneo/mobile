@@ -124,13 +124,24 @@ classDiagram
         +put(String path, Map Body, String id) Future<Map>
         +delete(String path, String id) void
     }
+
     class UserController{
-        
+        +getUsuarios()
+        +postUsuarios()
+        +putUsuario(String id)
+        +deleteUsuario(String id)
     }
+
     class BookController{
-        
+        +getBooks()
+        +postBooks()
+        +putBook(String id)
+        +deleteBook(String id)
     }
+    
     class LoanController{
-        
+        +getLoans()
+        +postLoans()
+        +putLoan(String id)
     }
 ```
