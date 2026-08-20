@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  static const String baseUrl = "http://localhost:3033"; // URL da api
+  static const String baseUrl = "http://10.87.38.139:3033"; // URL da api -> trocar localhost pelo ip da máquina
 
   // obs: declaração de atributos e métodos usa lowerCamelCase
   // obs: declaração de classes usa UpperCamelCase
@@ -41,7 +41,7 @@ class ApiService {
   }
 
   // PUT
-  static Future<Map<String, dynamic>> put(String path, Map<String, dynamic> body) async{
+  static Future<Map<String, dynamic>> put(String path, Map<String, dynamic> body, String id) async{
     final res = await http.put(Uri.parse("$baseUrl/$path"), body: jsonEncode(body));
     if(res.statusCode == 200){
       return jsonDecode(res.body);

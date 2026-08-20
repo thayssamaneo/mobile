@@ -1,20 +1,11 @@
+import 'package:biblioteca_api_json/view/home_page.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MainApp());
-}
+void main(List<String> args) {
+  runApp(MaterialApp(
+    title: "Bliblioteca App API",
+    theme: ThemeData(primarySwatch: Colors.pink),
+    home: HomePage(),
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  ));
 }

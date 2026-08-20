@@ -1,24 +1,21 @@
-import 'package:biblioteca_api_json/model/book_model.dart';
-import 'package:biblioteca_api_json/model/user_model.dart';
-
 class LoanModel {
   // atributos
   String? id;
-  UserModel user;
-  BookModel book;
+  String userId;
+  String bookId;
   DateTime startDate;
   DateTime dueDate;
   bool returned;
 
   // construtor
-  LoanModel({this.id, required this.user, required this.book, required this.startDate, required this.dueDate, required this.returned});
+  LoanModel({this.id, required this.userId, required this.bookId, required this.startDate, required this.dueDate, required this.returned});
 
   //ToMap --> mapear pra pegar os valores
   Map<String, dynamic> toMap() {
     return {
       if (id != null) 'id': id,
-      'userId': user.id,
-      'bookId': book.id,
+      'userId': userId,
+      'bookId': bookId,
       'startDate': startDate.toIso8601String(),
       'dueDate': dueDate.toIso8601String(),
       'returned': returned,
@@ -26,18 +23,12 @@ class LoanModel {
   }
 
   // fromMap
-  factory LoanModel.fromMap(
-    Map<String, dynamic> map, {
-    required UserModel user,
-    required BookModel book,
-  }) {
-    return LoanModel(
+  factory LoanModel.fromMap(Map map) => LoanModel(
       id: map['id'].toString(),
-      user: user, // UserModel.fromMap(map["user"])
-      book: book, // BookModel.fromMap(map["book"])
+      userId: map["userId"], // UserModel.fromMap(map["user"])
+      bookId: map["bookId"], // BookModel.fromMap(map["book"])
       startDate: DateTime.parse(map['startDate'].toString()),
       dueDate: DateTime.parse(map['dueDate'].toString()),
       returned: map['returned'] == true ? true : false,
-    );
-  }
+  );
 }

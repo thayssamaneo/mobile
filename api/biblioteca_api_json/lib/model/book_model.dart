@@ -10,7 +10,7 @@ class BookModel {
 
   // métodos (ToMap e FromMap usando factory )
   // toMap
-  Map<String, dynamic> ToMap()=>{
+  Map<String, dynamic> toMap()=>{
     "id": id,
     "title": title,
     "author": author,
