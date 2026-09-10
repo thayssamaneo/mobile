@@ -22,7 +22,7 @@ O escopo atual inclui operações básicas de gereciamento de dados persistidos 
 | RF03 | Gerenciar empréstimos de livros | Visualizar e gerenciar empréstimos de livros |
 | RF04 | Navegação | Interface com navegação por abas (livros, empréstimos, usuários) |
 
-### 3.1 Requisitos não funcionais (RNF)
+### 3.2 Requisitos não funcionais (RNF)
 
 | ID | Requisito | Descrição |
 | - | - | - |

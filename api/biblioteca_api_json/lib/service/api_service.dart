@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class ApiService {
   static const String baseUrl = "http://10.87.38.139:3033"; // URL da api -> trocar localhost pelo ip da máquina
-
+  
   // obs: declaração de atributos e métodos usa lowerCamelCase
   // obs: declaração de classes usa UpperCamelCase
 
