@@ -164,29 +164,29 @@ classDiagram
 
 ```mermaid
 flowchart LR
-    Fiscal([Fiscal / Usuário])
+    Fiscal["Fiscal / Usuário"]
 
-    subgraph SENAI CheckIn
-        UC1([Capturar Foto com Câmera])
-        UC2([Obter Coordenadas GPS])
-        UC3([Cadastrar Novo CheckIn])
-        UC4([Listar Visitas Realizadas])
-        UC5([Visualizar Detalhes do Registro])
-        UC6([Copiar Coordenadas GPS])
-        UC7([Excluir Registro])
-        UC8([Conceder Permissões em Tempo de Execução])
+    subgraph Sistema ["SENAI CheckIn"]
+        UC1(["Capturar Foto com Câmera"])
+        UC2(["Obter Coordenadas GPS"])
+        UC3(["Cadastrar Novo CheckIn"])
+        UC4(["Listar Visitas Realizadas"])
+        UC5(["Visualizar Detalhes do Registro"])
+        UC6(["Copiar Coordenadas GPS"])
+        UC7(["Excluir Registro"])
+        UC8(["Conceder Permissões"])
     end
 
-    Fiscal --> UC4
     Fiscal --> UC3
+    Fiscal --> UC4
     Fiscal --> UC5
     Fiscal --> UC7
 
-    UC3 ..> UC1 : <<include>>
-    UC3 ..> UC2 : <<include>>
-    UC1 ..> UC8 : <<requires>>
-    UC2 ..> UC8 : <<requires>>
-    UC5 ..> UC6 : <<extend>>
+    UC3 -.->|"&laquo;include&raquo;"| UC1
+    UC3 -.->|"&laquo;include&raquo;"| UC2
+    UC1 -.->|"&laquo;requires&raquo;"| UC8
+    UC2 -.->|"&laquo;requires&raquo;"| UC8
+    UC5 -.->|"&laquo;extend&raquo;"| UC6
 ```
 
 ---
