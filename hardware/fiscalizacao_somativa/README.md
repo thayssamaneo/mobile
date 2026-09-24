@@ -164,7 +164,7 @@ classDiagram
 
 ```mermaid
 flowchart LR
-    Fiscal([👤 Fiscal / Usuário])
+    Fiscal([Fiscal / Usuário])
 
     subgraph SENAI CheckIn
         UC1([Capturar Foto com Câmera])
@@ -203,40 +203,6 @@ erDiagram
         REAL longitude "Longitude obtida via sensor GPS"
         TEXT observacao "Descrição opcional da fiscalização"
     }
-```
-
----
-
-### 3.4 Diagrama de Sequência: Fluxo de Registro
-
-```mermaid
-sequenceDiagram
-    autonumber
-    actor Usuario as Fiscal / Usuário
-    participant View as CadastroRegistroView
-    participant Controller as RegistroController
-    participant Hardware as Sensores (Câmera & GPS)
-    participant Storage as Armazenamento & SQLite
-    participant Feedback as Feedback Sonoro/Visual
-
-    Usuario->>View: Toque em "Capturar Foto"
-    View->>Controller: capturarFoto()
-    Controller->>Hardware: Abre Câmera Nativa e Tira Foto
-    Hardware-->>Controller: Arquivo Temporário
-    Controller->>Storage: Salva em "imagens/registro/registro_*.jpg"
-    Controller->>Hardware: Solicita Posição GPS em Tempo Real
-    Hardware-->>Controller: Latitude e Longitude
-    Controller-->>View: Atualiza Preview da Foto e GPS
-    Usuario->>View: Insere Observação e Clica em "Salvar Registro"
-    View->>Controller: salvarRegistro(observacao)
-    Controller->>Storage: Inserir Registro na Tabela SQLite
-    Storage-->>Controller: Confirmação de Gravação (ID)
-    Controller->>Feedback: emitirSomConfirmacao()
-    Feedback-->>Usuario: Confirmação Sonora (Alerta do Sistema)
-    Controller-->>View: Sucesso no Salvamento
-    View->>Feedback: exibirMensagemSucesso()
-    Feedback-->>Usuario: Feedback Visual no SnackBar
-    View->>Usuario: Retorna para Lista de Registros Atualizada
 ```
 
 ---
