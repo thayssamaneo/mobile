@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "796351657392",
+    "project_id": "lista-tarefas-firebase33",
+    "storage_bucket": "lista-tarefas-firebase33.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:796351657392:android:ca69463845a6a6841e1275",
+        "android_client_info": {
+          "package_name": "com.example.lista_tarefas_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "796351657392-80km6ovviktcng93t6smkv5dvgc196c5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDm6ZIEuAUUkZv2IAISPI7gqo7xF_Tzh-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "796351657392-80km6ovviktcng93t6smkv5dvgc196c5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
