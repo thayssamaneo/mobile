@@ -8,25 +8,12 @@ import 'views/login_view.dart';
 import 'views/main_navigation_view.dart';
 
 // Ponto de entrada principal do aplicativo Book Nook
-void main() async {
+void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  await _inicializarFirebase();
   runApp(const BookNookApp());
 }
 
-// Inicializa o serviço Firebase de maneira segura
-Future<void> _inicializarFirebase() async {
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-  } catch (e) {
-    // Permite que o app inicie mesmo em plataformas sem o arquivo nativo
-    debugPrint('Aviso de inicialização do Firebase: $e');
-  }
-}
-
-// Widget raiz que orquestra temas e controladores da aplicação
+// Widget raiz que orquestra temas, inicialização e controladores
 class BookNookApp extends StatefulWidget {
   const BookNookApp({super.key});
 
@@ -35,20 +22,41 @@ class BookNookApp extends StatefulWidget {
 }
 
 class _BookNookAppState extends State<BookNookApp> {
-  late final AuthController _authController;
-  late final LivroController _livroController;
+  late final Future<FirebaseApp?> _inicializacaoFirebase;
+  AuthController? _authController;
+  LivroController? _livroController;
 
   @override
   void initState() {
     super.initState();
+    _inicializacaoFirebase = _inicializarFirebase();
+  }
+
+  // Inicializa o Firebase e instancia os controladores
+  Future<FirebaseApp?> _inicializarFirebase() async {
+    try {
+      final app = await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      _instanciarControladores();
+      return app;
+    } catch (e) {
+      debugPrint('Aviso de inicialização do Firebase: $e');
+      _instanciarControladores();
+      return null;
+    }
+  }
+
+  // Instancia os controladores de autenticação e livros
+  void _instanciarControladores() {
     _authController = AuthController();
     _livroController = LivroController();
   }
 
   @override
   void dispose() {
-    _authController.dispose();
-    _livroController.dispose();
+    _authController?.dispose();
+    _livroController?.dispose();
     super.dispose();
   }
 
@@ -58,22 +66,44 @@ class _BookNookAppState extends State<BookNookApp> {
       title: 'Book Nook',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.obterTemaClaro(),
-      home: _construirTelaRaiz(),
+      home: FutureBuilder<FirebaseApp?>(
+        future: _inicializacaoFirebase,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return _construirTelaCarregamento();
+          }
+          return _construirTelaRaiz();
+        },
+      ),
+    );
+  }
+
+  // Constrói uma tela de carregamento suave
+  Widget _construirTelaCarregamento() {
+    return const Scaffold(
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 
   // Define a tela inicial com base no estado de autenticação
   Widget _construirTelaRaiz() {
+    final auth = _authController;
+    final livro = _livroController;
+    if (auth == null || livro == null) {
+      return _construirTelaCarregamento();
+    }
     return ListenableBuilder(
-      listenable: _authController,
+      listenable: auth,
       builder: (context, _) {
-        if (_authController.estaAutenticado) {
+        if (auth.estaAutenticado) {
           return MainNavigationView(
-            authController: _authController,
-            livroController: _livroController,
+            authController: auth,
+            livroController: livro,
           );
         }
-        return LoginView(authController: _authController);
+        return LoginView(authController: auth);
       },
     );
   }

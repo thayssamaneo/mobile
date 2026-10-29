@@ -18,28 +18,41 @@ class AuthService {
     return _converterFirebaseUser(_auth.currentUser);
   }
 
-  // Realiza login com e-mail e senha
+  // Realiza login com e-mail e senha com limite de tempo
   Future<Usuario?> login(String email, String senha) async {
-    final credencial = await _auth.signInWithEmailAndPassword(
-      email: email.trim(),
-      password: senha,
-    );
+    final credencial = await _auth
+        .signInWithEmailAndPassword(
+          email: email.trim(),
+          password: senha,
+        )
+        .timeout(const Duration(seconds: 15));
     return _converterFirebaseUser(credencial.user);
   }
 
-  // Cria um novo cadastro com e-mail e senha
+  // Cria um novo cadastro com e-mail e senha com limite de tempo
   Future<Usuario?> cadastrar(String email, String senha, String nome) async {
-    final credencial = await _auth.createUserWithEmailAndPassword(
-      email: email.trim(),
-      password: senha,
-    );
-    await credencial.user?.updateDisplayName(nome.trim());
+    final credencial = await _auth
+        .createUserWithEmailAndPassword(
+          email: email.trim(),
+          password: senha,
+        )
+        .timeout(const Duration(seconds: 15));
+    await _atualizarNomeUsuario(credencial.user, nome);
     return _converterFirebaseUser(credencial.user);
   }
 
-  // Encerra a sessão do usuário ativo
+  // Atualiza o nome de exibição de maneira resiliente
+  Future<void> _atualizarNomeUsuario(User? user, String nome) async {
+    try {
+      await user?.updateDisplayName(nome.trim()).timeout(const Duration(seconds: 5));
+    } catch (_) {
+      // Falha secundária não impede a criação da conta
+    }
+  }
+
+  // Encerra a sessão do usuário ativo com limite de tempo
   Future<void> logout() async {
-    await _auth.signOut();
+    await _auth.signOut().timeout(const Duration(seconds: 10));
   }
 
   // Converte a entidade User do Firebase para a entidade de domínio Usuario

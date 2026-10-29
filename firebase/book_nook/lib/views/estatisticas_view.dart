@@ -172,6 +172,7 @@ class EstatisticasView extends StatelessWidget {
     );
 
     if (confirmar == true) {
+      livroController.limparEstantes();
       await authController?.encerrarSessao();
     }
   }

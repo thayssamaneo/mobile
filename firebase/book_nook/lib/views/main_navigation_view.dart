@@ -50,7 +50,10 @@ class _MainNavigationViewState extends State<MainNavigationView> {
     ];
 
     return Scaffold(
-      body: telas[_indiceAtual],
+      body: IndexedStack(
+        index: _indiceAtual,
+        children: telas,
+      ),
       bottomNavigationBar: _construirBarraNavegacao(),
     );
   }

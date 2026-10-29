@@ -56,10 +56,23 @@ class LivroController extends ChangeNotifier {
   // Conecta o ouvinte em tempo real com as estantes no Cloud Firestore
   void iniciarMonitoramentoEstantes(String userId) {
     _inscricaoEstantes?.cancel();
-    _inscricaoEstantes = _firestoreService.ouvirLivros(userId).listen((livros) {
-      _livrosEstante = livros;
-      notifyListeners();
-    });
+    _inscricaoEstantes = _firestoreService.ouvirLivros(userId).listen(
+      (livros) {
+        _livrosEstante = livros;
+        notifyListeners();
+      },
+      onError: (erro) {
+        debugPrint('Aviso ao sincronizar estantes: $erro');
+      },
+    );
+  }
+
+  // Cancela o monitoramento ativo e limpa a lista da memória
+  void limparEstantes() {
+    _inscricaoEstantes?.cancel();
+    _inscricaoEstantes = null;
+    _livrosEstante = [];
+    notifyListeners();
   }
 
   // Adiciona um livro a uma estante selecionada

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:isolate';
 import 'package:http/http.dart' as http;
 import '../models/livro_model.dart';
 
@@ -16,7 +17,7 @@ class OpenLibraryService {
     final url = _construirUriBusca(termo);
     try {
       final resposta = await _client.get(url).timeout(const Duration(seconds: 12));
-      return _processarRespostaBusca(resposta);
+      return await _processarRespostaBusca(resposta.bodyBytes, resposta.statusCode);
     } catch (e) {
       // Retorna lista vazia em caso de falha de conexão ou timeout
       return [];
@@ -31,16 +32,20 @@ class OpenLibraryService {
     );
   }
 
-  // Converte o corpo da resposta HTTP em lista tipada de livros
-  List<Livro> _processarRespostaBusca(http.Response resposta) {
-    if (resposta.statusCode != 200) return [];
+  // Converte a resposta em lista tipada de livros em isolate separado
+  Future<List<Livro>> _processarRespostaBusca(List<int> bytes, int statusCode) async {
+    if (statusCode != 200) return [];
 
-    final dados = jsonDecode(utf8.decode(resposta.bodyBytes)) as Map<String, dynamic>;
-    final docs = dados['docs'] as List<dynamic>? ?? [];
+    return Isolate.run(() {
+      final jsonString = utf8.decode(bytes);
+      final dados = jsonDecode(jsonString) as Map<String, dynamic>;
+      final docs = dados['docs'] as List<dynamic>? ?? [];
 
-    return docs
-        .whereType<Map<String, dynamic>>()
-        .map((item) => Livro.fromOpenLibrary(item))
-        .toList();
+      return docs
+          .whereType<Map<String, dynamic>>()
+          .map((item) => Livro.fromOpenLibrary(item))
+          .toList();
+    });
   }
 }
+

@@ -49,18 +49,23 @@ class _BuscaLivrosViewState extends State<BuscaLivrosView> {
       child: TextField(
         controller: _pesquisaController,
         textInputAction: TextInputAction.search,
-        onSubmitted: (termo) => widget.livroController.pesquisarObras(termo),
+        onSubmitted: (_) => _dispararPesquisa(),
         decoration: InputDecoration(
           hintText: 'Pesquise por título ou autor...',
           prefixIcon: const Icon(Icons.search),
           suffixIcon: IconButton(
             icon: const Icon(Icons.arrow_forward),
-            onPressed: () =>
-                widget.livroController.pesquisarObras(_pesquisaController.text),
+            onPressed: _dispararPesquisa,
           ),
         ),
       ),
     );
+  }
+
+  // Executa a busca recolhendo o teclado para liberar a renderização
+  void _dispararPesquisa() {
+    FocusScope.of(context).unfocus();
+    widget.livroController.pesquisarObras(_pesquisaController.text);
   }
 
   // Constrói o corpo dinâmico dependendo do estado da busca

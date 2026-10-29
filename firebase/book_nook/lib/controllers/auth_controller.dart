@@ -41,6 +41,7 @@ class AuthController extends ChangeNotifier {
       _mensagemErro = null;
       return true;
     } catch (e) {
+      debugPrint('Erro de autenticação no login: $e');
       _mensagemErro = _formatarErro(e.toString());
       return false;
     } finally {
@@ -56,6 +57,7 @@ class AuthController extends ChangeNotifier {
       _mensagemErro = null;
       return true;
     } catch (e) {
+      debugPrint('Erro de autenticação no cadastro: $e');
       _mensagemErro = _formatarErro(e.toString());
       return false;
     } finally {
@@ -63,11 +65,16 @@ class AuthController extends ChangeNotifier {
     }
   }
 
-  // Encerra a sessão ativa do usuário
+  // Encerra a sessão ativa do usuário com segurança
   Future<void> encerrarSessao() async {
-    await _authService.logout();
-    _usuarioAtual = null;
-    notifyListeners();
+    try {
+      await _authService.logout();
+    } catch (e) {
+      debugPrint('Aviso ao encerrar sessão: $e');
+    } finally {
+      _usuarioAtual = null;
+      notifyListeners();
+    }
   }
 
   // Atualiza a flag de carregamento e notifica a interface
@@ -78,11 +85,25 @@ class AuthController extends ChangeNotifier {
 
   // Formata mensagens de erro para o leitor em português
   String _formatarErro(String erroOriginal) {
-    if (erroOriginal.contains('user-not-found')) return 'Usuário não encontrado.';
-    if (erroOriginal.contains('wrong-password')) return 'Senha incorreta.';
-    if (erroOriginal.contains('email-already-in-use')) return 'E-mail já cadastrado.';
-    if (erroOriginal.contains('weak-password')) return 'A senha deve ter ao menos 6 dígitos.';
-    return 'Falha na operação. Verifique seus dados.';
+    if (erroOriginal.contains('operation-not-allowed')) {
+      return 'Autenticação por e-mail desativada no Firebase Console.';
+    }
+    if (erroOriginal.contains('invalid-credential') ||
+        erroOriginal.contains('wrong-password') ||
+        erroOriginal.contains('user-not-found')) {
+      return 'E-mail ou senha inválidos.';
+    }
+    if (erroOriginal.contains('email-already-in-use')) {
+      return 'Este e-mail já está cadastrado.';
+    }
+    if (erroOriginal.contains('weak-password')) {
+      return 'A senha deve ter no mínimo 6 caracteres.';
+    }
+    if (erroOriginal.contains('network-request-failed') ||
+        erroOriginal.contains('TimeoutException')) {
+      return 'Falha de conexão. Verifique o acesso à internet.';
+    }
+    return 'Falha na autenticação: verifique os dados informados.';
   }
 
   // Limpa mensagens de erro exibidas na interface

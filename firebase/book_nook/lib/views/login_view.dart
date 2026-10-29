@@ -173,6 +173,7 @@ class _LoginViewState extends State<LoginView> {
 
   // Trata o envio do formulário de autenticação
   Future<void> _aoSubmeterFormulario() async {
+    FocusScope.of(context).unfocus();
     if (!_formKey.currentState!.validate()) return;
 
     final email = _emailController.text;
@@ -189,10 +190,12 @@ class _LoginViewState extends State<LoginView> {
   // Exibe feedback visual ao usuário em caso de erro
   void _tratarRetornoAuth(bool sucesso) {
     if (!sucesso && mounted && widget.authController.mensagemErro != null) {
+      ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(widget.authController.mensagemErro!),
           backgroundColor: Colors.redAccent,
+          behavior: SnackBarBehavior.floating,
         ),
       );
     }
